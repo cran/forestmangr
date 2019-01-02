@@ -24,7 +24,7 @@
 #' @examples
 #' library(forestmangr)
 #' data("exfm7")
-#' head(exfm7)
+#' exfm7
 #' 
 #' # In order to calculate the volume of each tree, first we
 #' # Calculate the volume by tree section using the Smalian method:
@@ -111,7 +111,7 @@ vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){ 
@@ -160,9 +160,10 @@ vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
       FFWOB        = (!!rlang::sym(vwob_name)) / (CSA * (!!rlang::sym(th_name)) )   ) %>%     # Fator de forma sem casca
     dplyr::mutate_at(                                # Funcao que cria novas variaveis utilizando as variaveis
       dplyr::vars(FFWB, FFWOB),                   # especificadas por vars
-      dplyr::funs(medio = mean)    ) %>%             # Fator de forma medio
+      dplyr::funs("mean" = mean)    ) %>%             # Fator de forma medio
     dplyr::na_if(0) %>%                              # Se vwob nao for informado, variaveis que o utilizam serao 0, portanto, deve-se converte-las para NA, para depois remove-las
-    dplyr::select_if(Negate(anyNA))                  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
+    dplyr::select_if(Negate(anyNA)) %>%              # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
+    dplyr::ungroup()
   
   if(suppressWarnings(all(is.na(df$vwob)))) out$BARK_PERC <- NULL
   

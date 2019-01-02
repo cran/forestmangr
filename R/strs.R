@@ -40,12 +40,16 @@
 #' 
 #' # The objective is to sample an area, with an error of 5%.
 #' # First we run a pilot inventory, considering a 5% error and a finite population:
+#' exfm1
+#' 
 #' strs(exfm1, "VWB", "PLOT_AREA", "STRATA_AREA", strata = "STRATA", error = 5, pop = "fin")
 #'
-#' # With these results, in order to meet the desired error of 5%, we'll need to sample 59 more plots,
-#' # 14 in stratum 1, 21 in stratum 2, and 24 in stratum 3.
+#' # With these results, in order to meet the desired error of 5%, we'll need to sample 24 more plots,
+#' # 4 in stratum 1, 8 in stratum 2, and 12 in stratum 3.
 #' # After sampling the necessary plots, we now run a definitive inventory,
 #' # considering an 5% error and a finite population:
+#' exfm2
+#' 
 #' strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", strata = "STRATA", error = 5, pop = "fin")
 #'
 #' # The desired error value was met.
@@ -54,6 +58,8 @@
 #' strs(exfm2, "VWB", 1000, c(14.4, 16.4,14.2), strata = "STRATA", error = 5, pop = "fin")
 #'
 #' # Optional variable age, and one stratified sampled inventory for each map:
+#' exfm6
+#' 
 #' strs(exfm6, "VWB", "PLOT_AREA", "STRATA_AREA", strata ="STRATA", .groups = "MAP", age = "AGE")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
@@ -102,7 +108,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   # se strata_area nao for fornecido, nao for numerico nem character, ou nao existir no dataframe,ou nao for de tamanho 1, parar
   if(  missing(strata_area) ){  
     stop("strata_area not set", call. = F) 
-  }else if( is.null(strata_area) || is.na(strata_area) || strata_area == "" ){
+  }else if( any(is.null(strata_area)) || any(is.na(strata_area)) || all(strata_area == "") ){
     stop("'strata_area' must be a character containing a variable name or a numeric value", call.=F)
   }else if(is.numeric(strata_area) & length(strata_area)==1){
     df $ strata_area <- strata_area
@@ -164,7 +170,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){ 
@@ -241,12 +247,12 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   # Se tiver apenas linha, ou seja, se tiver apenas um talhao, cbind
   if(nrow(aux) == 1) {
     
-    x_ <- cbind(data.frame(df),N = aux$N)
+    x_ <- cbind(as.data.frame(df),N = aux$N)
     
   }else{
     # se tiver mais de uma linha, ou seja, varios talhoes,
     # unir as areas aos dados originais utilizando join
-    x_ <- dplyr::left_join(data.frame(df),aux, by = .groups )
+    x_ <- dplyr::left_join(as.data.frame(df),aux, by = .groups )
     
   }
   

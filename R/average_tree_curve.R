@@ -8,7 +8,7 @@
 #' @param dbh Quoted name of the diameter at breast height variable, in cm.
 #' @param h Quoted name of the section height variable, in meters.
 #' @param th Quoted name of the total height variable, in meters.
-#' @param facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: NA.
+#' @param facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: \code{NA}.
 #' @return A ggplot object.
 #' 
 #' @references 
@@ -18,9 +18,13 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm7")
-#' head(exfm7)
-#'    
+#' exfm7
+#' 
+#' # Get the data's average tree curve inserting the section diameter and height, total height
+#' # and dbh variables: 
 #' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+#' 
+#' # It's possible to get the average tree curve of each strata with the facet argument:
 #' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH", facet = "STRATA")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}

@@ -19,8 +19,7 @@
 #' 
 #' library(forestmangr)
 #' data("exfm17")
-#' 
-#' head(exfm17)
+#' exfm17
 #' 
 #' # Classify data into 3 classes:
 #' ex_class <- classify_site(exfm17, "S", 3, "plot")
@@ -69,7 +68,7 @@ classify_site <- function(df, site, nc=3, plot, .groups=NA){
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){ 

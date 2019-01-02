@@ -1,5 +1,5 @@
 #' @title 
-#' Calculate the Dominant Height of forest inventory data plots
+#' Calculate the dominant height of forest inventory data plots
 #' @description 
 #' This function is used to get a data frame with Dominant height values for each plot
 #' in an forest inventory data.
@@ -19,8 +19,8 @@
 #' 
 #' @examples 
 #' library(forestmangr)
-#' data(exfm9)
-#' head(exfm9)
+#' data("exfm9")
+#' exfm9
 #'
 #' # Let's say we need to get the dominant height (DH) values for a forest inventory data.
 #' # If we don't have a variable that tells which trees are dominant, it's ok. We can
@@ -35,7 +35,7 @@
 #' 
 #' levels(as.factor(exfm9$OBS))
 #' 
-#' # So, the "D" level must be the one that tells which trees are dominant. Let's use it:#' 
+#' # So, the "D" level must be the one that tells which trees are dominant. Let's use it: 
 #' dom_height(df=exfm9,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D")
 #' 
 #' # If there are subdivisions of the data, like different strata, they can be included in the
@@ -119,7 +119,7 @@ dom_height <- function(df, th, dbh, plot, obs, dom, .groups, merge_data=FALSE,dh
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){ 

@@ -19,42 +19,32 @@
 #' @param legend_pos Position of legend, when a color variable is supplied. This can either be \code{"left"}, \code{"right"}, \code{"top"} or \code{"bottom"}. Default: \code{"bottom"}.
 #' @param gray_scale If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.
 #' @param res_table If \code{TRUE}, the function will return a data frame with observed, estimated, and residual values. Default: \code{FALSE}.
-#' @return A ggplot object, or if \code{res_table = TRUE}, a data frame.
+#' @return A ggplot object, or, if \code{res_table = TRUE}, a data frame.
 #' 
 #' @export
 #' @examples 
 #' library(forestmangr)
 #' data("exfm11")
-#'
-#' head(exfm11)
+#' exfm11
 #'
 #' # Specifying the observed and estimated variables, we get a scatter plot
 #' # for the percentage residuals:
 #' resid_plot(exfm11, "TH", "TH_EST1")
 #' 
 #' # It's possible to get other types of plots, with the type argument:
-#' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram")
 #' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve")
 #' resid_plot(exfm11, "TH", "TH_EST1", type = "versus")
 #' 
 #' # It's possible to add a factor variable as color in the plots:
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA")
-#'
-#' # A colored plot is also available:
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", gray_scale=FALSE)
-#' 
-#' # It's possible to change xlabels and color labels:  
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",
-#' xlab="Total Height (m)", clab="Strata")
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", 
+#' xlab="Total Height (m)", clab="Strata", gray_scale=FALSE)
 #' 
 #' # If there are more estimated values variables, they can also be used
 #' # in the comparison:
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2")
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3")
 #' 
 #' # It's possible to rearrange the plots with ncol and nrow:
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", ncol=1)
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", nrow=2)
 #' 
 #' # It's possible to get the residuals table used to generate these plots, with res_table=TRUE:
 #' head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = TRUE) )
@@ -254,7 +244,7 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
   
   if (res_table) {return(df_graph)}
   
-  if (is.null(YLIM)) {YLIM <- round(max(df_graph["ERROR"]), -1) + 10}
+  if (is.null(YLIM)) {YLIM <- round(max(df_graph["ERROR"],na.rm=T), -1) + 10}
   #if( is.null(XLIM) ){ XLIM <- round(max(df_graph[OBS]), -1) + 10 }
   
   p <- ggplot2::ggplot(df_graph) + {

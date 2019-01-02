@@ -2,7 +2,7 @@
 #' Summarize forest inventory data
 #' @description 
 #' Get informations about forest inventory plots, like number of individuals,
-#' mean DBH, q, Height, basal area, volume, etc.
+#' mean DBH, q, height, basal area, volume, etc.
 #' 
 #' @param df A data frame.
 #' @param plot Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the data frame will be used, If there are no groups in the data, the function will fail.
@@ -23,7 +23,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm21")
-#' head(exfm21)
+#' exfm21
 #' 
 #' # Obligatory arguments. Basic informations about the plot.
 #' plot_summarise(exfm21, "PLOT", 810)
@@ -187,7 +187,7 @@ plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vw
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){ 

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Avaliando crescimento e produção</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Avaliando crescimento e produção</h1>
+
+
+
+<p>Primeiro Carregamos os pacotes e dados:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(forestmangr)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">data</span>(exfm16)</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">dados &lt;-<span class="st"> </span>exfm16</a>
+<a class="sourceLine" id="cb1-6" title="6">dados</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; # A tibble: 139 x 7</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt;   strata  plot   age    DH     N     V     B</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt;    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; 1      1     1  26.4  12.4  1020  19.7   5.7</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; 2      1     1  38.4  17.2  1020  60.8   9.8</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; 3      1     1  51.6  19.1  1020 103.   13.9</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; 4      1     1  63.6  21.8  1020 136.   15.3</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; 5      1     2  26.4  15     900  27.3   6  </span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; 6      1     2  38.4  20.3   900  80    10.5</span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt; # ... with 133 more rows</span></a></code></pre></div>
+<p>O objetivo aqui é estimar volume e área basal futuros, utilizando o modelo de Clutter.</p>
+<p><span class="math display">\[   \left\{
+                \begin{array}{ll}
+                  Ln(B_2) = LnB_1\begin{pmatrix}  \frac{I_1}{I_2} \end{pmatrix} +  \alpha_0\begin{pmatrix} 1 - \frac{I_1}{I_2} \end{pmatrix} + \alpha_1\begin{pmatrix} 1 - \frac{I_1}{I_2} \end{pmatrix} S + ln(\varepsilon_2)\\
+                  Ln(V_2) = \beta_0 + \beta_1 \begin{pmatrix} \frac{1}{I_2}\end{pmatrix} + \beta_2 S + \beta_3 Ln(B_2) + Ln(\varepsilon_1)
+                \end{array}
+              \right. \]</span></p>
+<p>Para isso, primeiro precisamos estimar o site. Vamos utilizar o modelo de Chapman &amp; Richards:</p>
+<p><span class="math display">\[ DH = \beta_0 * (1 - exp^{-\beta_1 * Age})^{\beta_2}  \]</span></p>
+<p>Este modelo é não linear, portanto, vamos estima-lo com a função <code>nls_table</code>,obter os seus coeficientes e estimar o site utilizando a equação para site, considerando a idade índice:</p>
+<p><span class="math display">\[ S = DH* \frac{(1 - exp^{- \frac{ \beta_1}{Age} })^{\beta_2}}
+{(1 - exp^{- \frac{ \beta_1}{IndexAge}})^{\beta_2}}  \]</span></p>
+<p>Vamos utilizar uma idade índice de <code>64</code> meses.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">index_age &lt;-<span class="st"> </span><span class="dv">64</span></a>
+<a class="sourceLine" id="cb2-2" title="2">dados &lt;-<span class="st">  </span>dados <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">nls_table</span>(DH <span class="op">~</span><span class="st"> </span>b0 <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>( <span class="op">-</span>b1 <span class="op">*</span><span class="st"> </span>age )  )<span class="op">^</span>b2, </a>
+<a class="sourceLine" id="cb2-4" title="4">            <span class="dt">mod_start =</span> <span class="kw">c</span>( <span class="dt">b0=</span><span class="dv">23</span>, <span class="dt">b1=</span><span class="fl">0.03</span>, <span class="dt">b2 =</span> <span class="fl">1.3</span>), </a>
+<a class="sourceLine" id="cb2-5" title="5">            <span class="dt">output =</span> <span class="st">&quot;merge&quot;</span> ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">S =</span> DH <span class="op">*</span>( (  (<span class="dv">1</span><span class="op">-</span><span class="st"> </span><span class="kw">exp</span>( <span class="op">-</span>b1<span class="op">/</span>age ))<span class="op">^</span>b2   ) <span class="op">/</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">                     </span>(( <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>b1<span class="op">/</span>index_age))<span class="op">^</span>b2 ))  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>b0,<span class="op">-</span>b1,<span class="op">-</span>b2)</a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">head</span>(dados)</a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt;   strata plot  age   DH    N     V    B        S</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; 1      1    1 26.4 12.4 1020  19.7  5.7 22.48027</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; 2      1    1 38.4 17.2 1020  60.8  9.8 24.24290</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; 3      1    1 51.6 19.1 1020 103.4 13.9 22.07375</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; 4      1    1 63.6 21.8 1020 136.5 15.3 21.89203</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; 5      1    2 26.4 15.0  900  27.3  6.0 27.19388</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; 6      1    2 38.4 20.3  900  80.0 10.5 28.61226</span></a></code></pre></div>
+<p>Com o site estimado, podemos ajustar o modelo de Clutter:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">coefs_clutter &lt;-<span class="st"> </span><span class="kw">fit_clutter</span>(dados, <span class="st">&quot;age&quot;</span>, <span class="st">&quot;DH&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="st">&quot;plot&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">coefs_clutter</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt;         b0        b1        b2       b3       a0         a1</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; 1 1.398861 -28.84038 0.0251075 1.241779 1.883471 0.05012873</span></a></code></pre></div>
+<p>Agora, podemos dividir a área em classes, e verificar a produção de cada classe com o modelo.</p>
+<p>Primeiro, vamos classificar os dados:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dados_class &lt;-<span class="st"> </span><span class="kw">classify_site</span>(dados, <span class="st">&quot;S&quot;</span>, <span class="dv">3</span>, <span class="st">&quot;plot&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">head</span>(dados_class)</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt;   plot site_mean strata  age   DH    N    V    B       S interval category</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; 1   35   21.4510      2 44.4 18.8  740 40.6  6.5 24.0354 25.07877        1</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; 2   35   21.4510      2 55.2 19.1  720 50.4  7.4 21.0958 25.07877        1</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 3   35   21.4510      2 68.4 20.1  720 62.2  8.5 19.2218 25.07877        1</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 4   24   22.0728      2 30.0 13.5 1040 24.3  6.0 22.4604 25.07877        1</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 5   24   22.0728      2 40.8 17.5 1040 54.8  8.9 23.6813 25.07877        1</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; 6   24   22.0728      2 52.8 19.0 1040 76.6 10.9 21.6216 25.07877        1</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt;   category_</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; 1     Lower</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; 2     Lower</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; 3     Lower</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 4     Lower</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 5     Lower</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 6     Lower</span></a></code></pre></div>
+<p>Agora, estimamos área basal e volume com a função <code>est_clutter</code>. Também iremos calcular os valores de Incremento Médio Mensal (MMI) e Incremento Corrente Mensal (CMI).</p>
+<p>Fornecemos a ela os dados, um vetor com a idade desejada, as variáveis área basal inicial, site e de classificação (criada anteriormente), e um dataframe com os coeficientes do ajuste de clutter (criado anteriormente):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">dados_est &lt;-<span class="st"> </span><span class="kw">est_clutter</span>(dados_class, <span class="dv">20</span><span class="op">:</span><span class="dv">125</span>,<span class="st">&quot;B&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="st">&quot;category_&quot;</span>, coefs_clutter) </a>
+<a class="sourceLine" id="cb5-2" title="2">dados_est</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; # A tibble: 318 x 10</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; # Groups:   category_ [3]</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt;   category_  Site G_mean   Age LN_B2_EST B2_EST V2_EST   CMI   MMI CMI_MMI</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; 1 Lower      23.0   9.13    20      2.21   9.13   26.6 NA     1.33   NA   </span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; 2 Lower      23.0   9.13    21      2.25   9.48   29.8  3.24  1.42    1.82</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; 3 Lower      23.0   9.13    22      2.28   9.81   33.1  3.30  1.50    1.79</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; 4 Lower      23.0   9.13    23      2.31  10.1    36.4  3.33  1.58    1.75</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; 5 Lower      23.0   9.13    24      2.34  10.4    39.8  3.35  1.66    1.70</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="co">#&gt; 6 Lower      23.0   9.13    25      2.37  10.7    43.2  3.36  1.73    1.64</span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt; # ... with 312 more rows</span></a></code></pre></div>
+<p>Podemos também gerar um gráfico com a idade técnica de corte de cada classe:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">est_clutter</span>(dados_class, <span class="dv">20</span><span class="op">:</span><span class="dv">125</span>,<span class="st">&quot;B&quot;</span>, <span class="st">&quot;S&quot;</span>, <span class="st">&quot;category_&quot;</span>, coefs_clutter,<span class="dt">output=</span><span class="st">&quot;plot&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAACnVBMVEUAAAAAAAMAADMAAFwAAwMAAwQAA5kAA/8AMzMAM1wAM4AAXFwAXKMDAAADAwADBJkDBP8DmZkD//8EAwAEmZkE//8ZGT8ZGWIZP2IZP4EZYoEZYp8aGhozAAAzADMzAFwzMwAzMzMzM1wzM4AzXFwzXKMzgKMzgMU/GRk/GT8/GWI/Pxk/Pz8/P2I/P4E/YoE/Yp8/gZ8/gb1NTU1NTWlNTYNNaWlNaYNNaZ1Ng7ZcAABcADNcAFxcMwBcMzNcM1xcM4BcXDNcXFxcXIBcXKNcgIBcgKNcgMVco8Vco+ViGRliGT9iGWJiPxliPz9iP2JiP4FiYj9igWJigYFigZ9igb1in71in9lpTU1pTYNpaU1paYNpg51pg7Zpnc6AMwCAMzOAXDOAXFyAXICAgDOAgFyAgICAgMWAo8WAxaOAxcWAxeWBPxmBPz+BP2KBYj+BgZ+Bn5+Bn72Bn9mBvZ+BvdmDTU2DTWmDTYODaU2DaWmDaYODg52DnbaDnc6Dts6DtuWZAwCZBAOZmQOZmQSZmZmdaU2daWmdaYOdg02dg2mdg4Odtp2dtuWdzuWfYhmfYj+fYoGfgT+fgWKfvZ+fvdmf2b2f2dmjXACjXDOjXFyjXICjgDOjgFyjgICjo6Ojo8WjxcWjxeWj5eW2g022g2m2nWm2toO2zs62zuW25eW9gT+9gWK9n2K9n4G9vYG9vZ+92Z+92b292dnFgDPFgFzFgIDFo1zFo4DFo6PFo8XFxaPFxcXFxeXF5aPF5cXF5eXOnWnOnYPOtoPOtp3OzrbOzuXO5eXZn2LZvYHZvZ/Z2Z/Z2b3Z2dnlo1zltoPlxYDlxaPlxcXlzp3lzrbl5aPl5bbl5cXl5c7l5eX/AwD/BAP//wP//wT///9EbuX6AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO3di58dZXkH8GGDXFLWUlIFml3KQpG03tnQktXQEismtNReNbaFFe2FmlR7g9paFdQFpZW1WmSxiVYMbSEtvWQxtUVNkDaJ7G42xM3Zk5Dzt3Tul3Ped+admffyvPP+fp8P7M7u7GSe83zPO7dzzngDBCEcb9BHELoBUIR0ABQhHQBFSAdAEdIBUIR0agNd7khQD+0AKOohHQBFPaQDoKiHdAAU9ZAOgKIe0gFQ1EM6AIp6SAdAUQ/pAKjaepb2vva96cSzH3ntfUMT3//Ilvey/q5xutofE0DnJ8LcJGFRzSOrnqCYHL/oB5sLQL+wJTdHNHFiy8QEXaBLe8MGbU6/3SxjqfVidARdmp+48r7q2ZRGWj1BC3MN9OltPjQ0y0t35AhHEy/dQRioP8DfMXF1XMXS3qsfk7PQWjEKdPl4Wr6xyKvneGEInWcMjQygPmvKQP0y0g3cQSObOgCVB/TH9mZD6Ik33gmgMgKg8oBuPjhx5ePxxMG3MuQBaP3QArr0Jf+g4Y2PxfvkVx8KjiGCUelgtPV89s6JiauCrj77S1d++QtycMsE6u9Qxk186d1fjuQlR+lL/kHRVX8XA81NJECT0lpHMdDg3EOwrm8+NDyhpj20gL50p39c8eyWoGVLXwx/FRxGBYPSiZ/y1R688jH/t/5Rsb9/d+Wv/efeqx/nLbdGZAJdTofQgzdF8pKj9Jfu9I8wnn19tJOan4iBpqW1jlqg81smXvurv+E/w4LuFCYUtYcW0Plw6sSW6PA2bGY0sTzvPzgnfjL47mDwJ/FPZUQq0GQIXfrw47G8+Ch9PoR7PAKan4gdZ6W1jeIR1K/nPcvhat80NKGmPaSAntgSPRjz4bFG9NBELX/pF+4r8D2x5UopT89lyUD9lQ5X8vjmZGiMvhyP2hw96QoT0e/zz8yWUQ40Wsewc4UJNe0hBfRgfLxwPNxQRr87/obgy3H/v/is8USwzSQL9ES0f/KH9xWBzkeVRQ0tTIS/z5fWNpqAhhDzE4raQwpo3Lm4vrD6pQ+HxxIHw+1JNi9ZoNEQevwtywWgS3ujRkYl5Sei3+dLaxtNQMOv+QlF7SEGNHow4vqCyRNvCb4EI5L/KGRV0wUaDqHz7y0C5XY1/b38hkpaXA7ofAVQJe2hA/RvD8X7nkF98e7M1Ye+cF8wz7+96dByOvJEc1AF6oPbfCJa3fwImtuqFyaKI6yMSAZ6MLv2MB8d9CUm/Q7kJxS1hwxQf6iM9z3TgyW/5D/75XBP/FfC6fgAZPn4nxIGGhycvz7b+Uz3QcPfJfuguYnk92lpbSMZaNah8EA1t9u5eWhCTXvIAI23iqHEg8nJxInwxODBieRhmLjqseXl77/7ccpA/SLCmgpA4+Pz6JxTYSI9XZqU1jaSgaZXupbm46dV1KP5+JUu2YSa9ph/NVP4Cpnv70169tZDy/+abCviOuMtfng9KX553r9MSNsmSqtnaT6qJT6LdOKO8NVMJ6Ie+k+y9wRXlSYm3vR4YSL9vaxXHkoGGoySv+7X8e93Rk3wW+Sv/NIXwxOghQk17aHwetAwUfnBNcCJNyev6lrae1Puy3J8Le1P4rMykg58ZdUTFhOeffjFx6MrSMFV2vBreIkwuCL4H3dc9UeHChOF3/ultY9soMtLX3q9v45veE805Xv94/SqbGFCTXvwinrUUyuM17uoDYCinjoBUN1BPbUCoLqDemrF32m+iT2hKACKesTjH7Zn7w0sTCgLgKIe0gFQ1EM6jYF6pu/sJClJPabXQ1a6Wg+AdiRdrQdAO5Ku1gOgHUlX6wHQjqSr9QBoR9LVegC0I+lqPQDakXS1HgDtSLpaD4B2JF2tB0A7kq7WA6AdSVfrAdCOpKv1AGhH0tV6ALQjGa1nztzKSAiAdh3onB+D69M2ANpxoHNzdgsFUCeA2isUQDsO1PYhFEC7DnRg924ogDoC1FahAOoAUJuHUAB1AajFQgHUGaB2CgVQJ4DaO4QCKICSDoACKOkAKICSDoACKOkAqBtArRUKoABKOgDqCFBbhQKoS0AtFAqgrgC1dAgFUAAlHQB1Cqh9QgHUGaB2DqEACqCkA6BuAbVOKIACKOkAqDtArRQKoABKOgDqEFAbD5MA1DWglgkFUJeAWjiEAiiAkg6AOgfULqEA6hRQ+4ZQAAVQ0gFQ94BaJRRA3QJq3RAKoABKOgAKoKQDoABKOgAKoKQDoA4CtUkogDoG1LYhFEABlHQA1EWgFgkFUNeAWjaEAiiAkg6AOgnUHqEA6hxQu4ZQAAVQ0gFQN4FaIxRA3QNq1RAKoABKOgDqKFBbhAKog0BtGkIBFEBJB0BdBWqJUAB1EahFQyiAAijpAKizQO0QCqBOArVnCAVQACUdAAVQ0gFQACWdOkBf/MvpW44BKO24C3T9oa13/R9GUOqpAdQKocJAz9x/89P5aQClGdF6ugbUHz8fLfwAQGnGVaAnp+8u/gBAaaYOUBuECgJdf+jmv/mL6a2fiKam/AAozQjX0y2gZ+7/mX/urx/IDaMASjOOAj29++6Q6c3PACjt1AJqgdBaQPsHsiMlAKUZ8Xo6BfTM/duCL0cxglKPo0D7B0KaB7alPwBQmqkHlL5QUaBn7r/lWP9o7lwogNJMjXo6BbS//sj09G/lriUBKM04C3Q4AEozNYGSFwqg7gK1YggFUAAlHQB1HCh1oQDqMFAbhlAABVDSAVDXgT7oXRx8e87zc8FrlK5bkwCoy0B9oZ/yQqChTz9XKF25BgFQt4F+ZjwEen7ce5WvNPw/rQCo20A3ea8OgL7iXRBMxl8oBUCdBvqgd1G8DxoGQOnFaaA+yLk80LPYxJOL00DHvR/JAz1H8DAeQB0Gusm7eC4H1D+Sv1zhmjULgLoL9Jy/QQ+AXhRNbqLoE0AdBrrJS3J5eKKJ3vZ9AKAAGgE9T/AUaBgAdRdomGATPxccLl1cPa+JAKjjQAch0HPpYErtWieAAqgP9CyAUo3zQIm/ahlAXQdK/EWhFUB7/30EQK2KY0BXf/wbAGpVmgGlK5QNtLd/KsyktwFA7YobQBfSgzoAtSwN6iEtlAl0beaGb0ffHcYm3rLUrCfaUvojkf9/pevVNGygb09Yrv2si0ApjyhVqQN0air1GQqliJQJtP/cnvgbB4/i59IYXKvmEQc6NcUASo4oG2jvg0eGx1IHgVopVBTo1BQHKDGjTKC9D9x23Y4gt006d5A05wbQIkbf51yBLB2jbKCz7h7FxzKtFSoGdMhhWis9oUyg/cUNH3o+zD7ngA4SlpYKFQI6jDArldwgygZ66h3JPqiTR/FR7BQqAnQEYLFUUkTZQAXiCFDrhAoAHdU3XCkhojygp+6Z9C65nXeOyQmgdg6h1UBZ9OgK5QBdjA6Rxna6DNTKM/aVQJnwRp+LVIiyga54Y7c/3++/fPiaPX1OnAFqmVAxoCM/ZRRKgygTaG92Y7xxX7nMaaAWDqFVQDnkmE9FCkSZQNfelgycDl5JKsY6oSJAGT9mbysICGUDTVk6/4Jl6zbyFfVwtXEKNU6UCbQ3uyv5ZqNzLxYZiuNAjRNlAu2vjO30Yb68f9LbxfEJoERTXk8JNH6hRomygSanmbwbeT6dAmqT0NJ6ypiVFGry8icHaHii3rvuSa5PZ4DaNoRWAuX9Yekz0ZxQHtDKOAPUMqFl9ZQLK99WmCJaAdT500yDDgGt8FW1M2NG6AjQ/7rXP3j/1tfi3OPey+1GY5XQCqBlf1pZpwmhw0DXZnySLr9gmZGOAK20VX08aGAQHRlB972uHxzE/0T4lo8d2wF0YJdQpUANDKIjQMOsXu/um+YYselUE7ceAVc1hGojygaapPdtDk+3gNo0hKoGqvtwngk0GzcPO38lKYo9Qnn1CJESK1Mr0Qqgaz/n+rX4KPZs5FsDJSZ0FGjvKztuuyY+RnLwffGc2A5UkJNomfqEMkbQ3hNeFu7FeAClGT1A9R3OM4AGb4v/evS2+Of575oDUJrRBVQXUSbQ/ld4G3angVohVB9QPdt5NtDo/FLv778OoEkAdDQ6hLKBrkYHR70nuC+odw6oLULZ9Qg7aiZUIVE20AXvhvDr2gwOkpJYD1Toz+tWqZwoE2j6rs61Geffk5TFDqHMemoQql2lYqJsoMmJ+vC1TQAaBUDZUSuUCbT3/ngEXfQwgmaxQiirnlp8GlSpUigTaH9lQ/BupOCMPfZBswAoN+qEsoH6Q+fY1KTneZfhKD4XG4TygIovoVmVqohygPb/51af53X38ngCKNXIAdpcqGyiPKCVcRGoDUIZ9dR00/SimZqDpXKgvW9hE5+PBRc8OUDrLIKU0Aqgs3jBciEAWhoFRJlA126N/x3/KAlA87ERaH0xLaqUTpQNdAZvO2bHVqD1ltFqT0YyUQ7Q+LPpV9/FG0AdBUpfqAyg7aqUK5QJNL1VZ38F+6DF2Ae0iZWWVcokygSaG0vzb5o7vfsB54GSF8oEWnchrYuUJ7QCaP4jwNcfmgZQABWMLKFMoL0PRG/q3HFt/sUiJ3cD6IC80OF6mjGRJ7QtUSbQ7Ch+LLtP0pmP/ROA+pl70LtoMHglPc9xRfzzTdHkxWpWUzgsoPWXIuVZKEUoB+gN0Zs6859889QDJwHUzznPu2iOAXS8S0ClCm1FlA2UcY/jk3f1U6DhOfzWq08jdYGeHw+AJs3blII8P37Ba+SvXf1QAirjcJ4JNE3vq4nUMx97po8RdBCQfHUG9Jx3QfLzV7JvjUYSUFm72q2JlgNd256cBz3q2wTQweCsd/HZAGjYPH80TTbwvtVXKVm/uiEGtPUdQoaB5q5yhomvxZ++qw+gg2iczIBuyqE8613oP1wXXK5kJWtEFlB5ZyvaCR0ZQReKQONr8Ueno2x91G2gwZDpD6JR83yt2W5nfBDvmRYqFaik82ltiI4AXQnOfK7Gd0jqfTB/pySMoOExUQr0bH6rPu5d+Jpgm296T3SknsYbV5knfJsTHQHa+4cj2bs6i5c6nQca7Wf6QKPm5fZAk5xn/Exv6m0RSiP1kkRToiNAQ5bZB9jmP6PeeaCb0j2fH/Z792nWaNk1oAqE1jPKBJq9kH4BrwfNJQN6ud+6B/Mn5eP9UfNnQyUClX1VtxFRJtD+ive6YNN+6h68on40wSY+6N2mwgHReCD03Ljxk02EgTYiygbaPzwZjRT4dLvRJEDTrXkoNb72aXoApQ10UH9flAO039t/reddcjs+YXk0IdDB3GfSrXk0lJ4bp+CTPNC6RHlAK+Mu0DhEX3YnE6iqGusQBVAA5UdZjeJEeUBP3TNZuoUHUKJCpQIlIJQDdDF+vfJOAOXGFaCKihQkyga64o3d/ny///Lha/b0OQFQmkLlAlVao9A5JybQ3mxyemkF50H5IflJTZKBqn0WCpwXZQJNP6Met+PmJnpY/d2gxi/GUBOrgAoIZQNNWebfdgygSdIHNdxRb/o6HTWRDVT1jkwVUSbQ9Fp8tq0H0DhT+eSBElFqG9AgZQ8fE2h/ZWynD/Pl/ZMePvqmkKmpcqDmkUoHquVYkP/gsYEmp5n491BwEuioQ/8hmhtWaxapGqD6hA4/dhyg4Yl677on+9y4B5T1GGbNo0JUPlBNp9M4jx0PaGWcA8qWV2weAaPWAuUQZQN97gYAHQpP3Uj3DBtVBFTT+d7RB44JtOQOiGygcyTPWQtFsKFccMzKDRpVAFTrJTMhoNmb5rKPsi0BOpdFVxnyItbQEmvMss1t61UA1XtRV2QTf+r3Y5cCV5LmitFWh6QINbTUGa9qM0SVAdXY2fzDxR5BP3DbWPj5oLdOVr9pbm44+gqREYGGViArKdqAUSVADb4uhg10VvwuH5lKO4UKA+X/vqxm7Zt6NUDNCWUC7S9u+FD0AaH7xIDmv+8c0GpcFUVrJaoQqJHGsoGeSj5QhPVJoaNAh+qwSqgg0NJlVBWtcxhVBNTYEMoGKpD8Pmh+gbYJrWyoCCqBmnURVQXUlFAW0MPXlr8dqQh0OJYJrWqoECmhkvUQVQrUQF8ZQBcqPrJBBKg9QisaKuZJtGQNRpUBNTSEjgJd8bxLdmwveyFTOVDLhJY3VNSScMXK90bVATUjdBToQnjrmVMzFUNoybV4q4TKAVqjeYqJKgaqva0jQJNX0/Pf7FEJ1CqhpQ0VV1SrYpVGFQI1MoSOAE0ubkZfha7Fj6ZLQAWXU69idSee3AEangpt+q5Oe4SWNbSWntoVqxGqGqjuro4CfdvtXwuy//rg/7NNP8DWGqElDa2Hp37FSkZRlUBNDKGjQIv3oWn8Ccu2CK0AWmNJjQqWblQpUANCGUAv3ZFlezugFgjlN7Q2mmYFSyaqHqjepo4CLex1tvhkEUuEGgcq+YBJLVD9QkeBFl4eUv1iEX7sEMptaAMuzeuVZ1QHUJ1NHQEqGoE3zVkhVDbQpvXKIqoYqPYhVCVQK4TKBNryGEKKUdVAdR8oKQVqw6E8r6HNmLSsV8LuKIDWAUrzM14LKQNaf2kSnpEtiaoHqrepGoDSFsppaFMfEuptN4xqAqqtqYqB0hcqGaik4aU5UQ1AtQ6hWoDG1cS3ugxug3X+1f43Fxq/69WA19Dm+4CynpFNx1EdQHUKVQ00L3Q8Axp9a/re6kFkA5W4zWhkVBtQTUKVA82E5u4EfNbzLh+c8/K3CzYVZkPbnOiReW6tAVEtQDUKVQ807dgr2Yg5Ht3dksIQympouzORcs/+1jWqEagWoRqAJtWcS29VHY+l5m+uPuADbbFI6d2rY1QPUH1CdQCNNwhnvQuD/c7Ls7E0vaG1wSgAqmADKD6OagKqTagWoFE58UG8v3UnDrTdFj6Iit4JGtUFVNduqEag48F5pfPjPk4ngMpvnhBRbUA1nWvSBDSrxhd6BW2g7X0qHF4qkeoFql6oTqDJ2dAraB8kSQOq+jbBzPXUB1SPUF1AB3Of9i740UGskvRpJgk+FR9DTE3xkeoGqlqoPqD+Pqgv9Nx4cLKJ8ol6GQPoQHn3uEY1AtUiVBvQYAiNrm8Gm3XClzolAdXQPaZQnUB1CNUHdDD3qfHEJ+EXi8jyqWcXzTBQDUI1AqX5DhB1QHWdKTS3iR9oqFEnUJIvDmUBlbVsXfWybtui4Z8No7pGrUApClUJ1ES9uoGqrlEvUIJC1QM180kc+v5FtTVqBkpPqFKgBoQaAqqsRt1Ag/77B/BSFbTKSEPlrpp2ofqBqq1RG9DslF14ClTgZQ96orqhuoUaAKq0Ri1Ai1c9hoGaVaq8oQ4AVSlUOdBhiRygxpiqb6heoUaAKhSqGCjToO9zbo4tVL9SDQ3VKtQMUHVClQLluSsUY1ipjobqFGoIqDKhCoGWcBspxhxSbUA1v49cz7+Wi6IilQEtZ8YuxoRSLQ3VKNQYUEVFqgJaAaykGM1I9TRUn1BzQNUUqQZoNa2KYvQZ1dRQbUINAo2LlFulMNDv7Z7eetcxIaBCqqpr0TOS6mqoLqEmgaoQKgr05HSQWzKhfKCCnMRqUY5UW0M1CTUKVEGRgkDXH/5kv//i7ukHqoEKSxKuRalRfQ3VI9QsUPlFCgI9/floGBUGKvJv1yhG3ZGTxoZqEWoYqPSTvoJAoxy9+ZlKoHXw1OyYEqM6G6riIGI4xoFKfh7WAnrg7uhrgIMDtB6c+rVIR6q1oRqEUgEqq8o6QE+/LxtAOSNoTTONSpG7udfbUPVCzQOVK7QG0PWHH81NMYHW59K4FFlINTdUuVACQKUWWQPoCw/kp1hAm0hpUYyUoVR7QxULpQBUJlFxoEfvLkwygDYz0q6W1kb1N1StUBpA5VUpDPSFT/j/W/9suhc6CrTpGNa+lDZDqYGGKt3MUwEqS6go0KPhlaTpbSUjaOM9QSkNa2rURENVCiUGtHWVgkBjn2Un6tscqchqWIOh1EhDFQolA1RSlaIj6EiYQBuvhryG1TVqpqHqhBICKqVKaUDbDKCyT+7W2eCbaqgqopSAyihSFtCmR0gyaymGMZSyVtBYQxUJJQVUQpVSgUoopdUiGKk0aq6haoQSA9p62ygJaHuf6jZ65UOpwYbK3q8JQw1oWmXDMiUClVZL+wWNhiJQpa9Al7nMdmknVA5QOT7VX6mmBlTBIEoPaLsqpQCVsYFvXYlgaAFtuwEcDUWgbUYeaUCNV9IwxhsqWajxejhpWqUMoBJ9tqikYcw3VK5Q8/Vw0rBMCUClbeDbVdIwFBoqs2AK9bDTrK+SgBKopGFoNFRexTTqYabR/nZ7oNJ96hVKpKHSSiZSDzsNiJIEqpMolYbKOpynUg8ntctsDVSJz4G+YyUyDZ2TQ5RMPZzUrZIsUF2DKKGGShFKqB5O6pVJF6j8c9jMkGqohJJJ1cNJnTIJA9VDlFhDW5dMrB5OxMtsDVTyja+a1tE45BrasmZy9bCT7XFX1NkeqKZCVP0D9BrarmR69XAiSJQ6UOVEKTZUdHRhhWI9nAgRpQ9UMVGaDRXeAo6EZj28VJdpA1ClQqk2tKlQqvXwUlWnFUBVEiXb0IaDKNl6uCkv1BKg6oiSbmgDo6Tr4aSMqDVAVREl3tDaRInXwwmfqEVA1Qil3tC6W3rq9XDDKdQmoNJeUJEP/YbO1TJKvx5umHXaBbTN+RdO7GioeNl21MNJB4BKJ2pJQ4WrtqQebuwHWnOTVxVrGipYtjX1cGM90CDyjFrVUIGyrapHIJYClUfUsoZWjqOW1VMZa4HKImpbQ+fmyo3aVk9VLAY6kGLUxoaWGbWxnrLYDVQCUUsbyjVqaT3c2A60fDgRiLUN5dRtbT2c2A900M6o1Q0FUDuAtiFqe0MB1Aqgg+rDW07sbyiA2gE0SAOjXW2o6fWQlW4BHR5Hu/3qH2a6Wk9XgA7qGu1qQ02vh6x0EGgQcaRdbajp9ZCVjgIdCBvtakNNr4esdBdoEAGkXW2o6fWQlW4DHYwYdebaten1kJXOAw1ShrSrDTW9HrLiBNBBidGuNtT0esiKK0CDAKiFcQlomOGNfFcbano9ZMU5oEEA1J44CTSfrjbU9HrICoB2tKGm10NWALSjDTW9HrICoB1tqOn1kBUA7WhDTa+HrABoRxtqej1kBUA72lDT6yErANrRhppeD1kB0I421PR6yAqAdrShptdDVgC0ow01vR6yAqAdbajp9ZCV5kCHMjX8g5KQmhf1yPl3Vc3bFOhwpjo2rw3rWGdeG9axbF4AJfLvqprXhnUsmxdAify7qua1YR3L5m0NFEFUBkAR0gFQhHQAFCEdAEVIB0AR0mkM9Hu7p7fedSz89uS0nwfKZk7nWH9qejr+K3ZO7w5mnd76aNVyX3zk5mfCb7JFcheezluy0qiHZj1NgYZ/P31LsLD1h/zv4n+BnWyOA7ccW//ctpJZj4bLnd5Wtdyjv5n8Klskb+HpvCUrjXqI1tMQ6PrDn/Th7w6fPyfLCgqTznEyeOad3s1/Nq//9dPBlwMCyz0QF5UusmTh0bwlK416qNbTEOjpz4f/eLAs3/pvP106czbHgeDZsf7QNu6sPwjnO/PRZ6qXGz8A2SJLFh7NW7LSqIdqPa0Oko4Gyw3H5bvKZkvnOHP/ttyql/zBtn71cqOlZIssW3j+hyUrjXro1dMK6IG7wy//+8j09N2lM8ZznN4dznY03MUuW+4DAsuNn3XpIssWnn8ASlYa9dCrpw3Q0+9LFnt6d9WTLpxD8AEItyCVy234AJSsNOohWE8LoOsPZ//UyfLTGPEc8TpWbUJye98lyy08AP5E2cKzH5asNOqhWE8LoC/k1u3M/VUPQDCH4D7OgWxZJcttto9TstKoh2I9zYEeze9+nPnzit2WcI71h6qOEsM5P5qVULLc+NREusiyhacPQMlKox6S9TQG+sIngn/+s/GCT5ceJqZzVJ5nC5I/v1ay3Prn2UpXGvX0SdbTFGh6RWH9kY8f67/4VyWXx3Jz+M+fYz+oeILGW5Cq5a5/7ubwyZstkr/wZN6SlUY9ROtpCDReVLAX+4/T0z/98bLLt/k51p+a3lo+c7oFKV/uyeSCW26RvIUn85asNOqhWg9ezYSQDoAipAOgCOkAKEI6AIqQDoAipAOgCOkAKEI6AKooixuPmF6FTgRA1WRtxttleh06EQBVk0XPu8z0OnQiAKokvff/3uSGb5heiy4EQJVkZeN3Z9Nt/Kl7PO/SPdH3z016Y+8ytloWBkCVZGGXv5GPD5PWZjYe6e3zwm3+wmVHerPejYbXzqYAqIqsXn+kvzo5Fo2ai8FQGij1B9Zgs782E/8CEQiAqshCMEYuxCPlQgC0N+ur7M0GB069WRzgiwdAFWTt7cHx0YoXHSYtBlBDoGsz8S1WsI0XDoAqyGJyr59wpOzNbniyfzjYA12bwamnugFQ+em9P9rHXIhPha7d6h+6334k2RFF6gRA5WclHidXo1Ohidds73MVJ5qEA6DS05vdlXwT7mwu+lv4OIve2E7/5/fgKF44ACo7vX3JWaTegjd2b7ZHekNI1vNwEbROAFRyQoOhwOiYfeORte3ZsXtvf7w7iggGQJVn7R0hyN4+DJwNAqCqkx4j4dCoSQBUdVaSXdJv4tVNDQKgqrM6eem9/jb+5a8+WT0vMhIAVZ6Xn5j0vEtwZNQsAIqQDoAipAOgCOkAKEI6AIqQDoAipAOgCOkAKEI6AIqQDoAipAOgCOkAKEI6AIqQDoAipAOgCOkAKEI6AIqQDoAipAOgCOkAKEI6AIqQDoA2zIAT/QvpdgC0YQBUTwC0YQBUTwC0YQBUTwC0YQBUTwC0YQBUTwC0YQBUTwA0zWL0gcjZD9ZmPP4NYattrQSL++4HvzvrJTfu8v+Fjfvyt0kqX0iv8JeXbucvp8MB0Cyrk0MtX2kDdCH4XNDwRh8rMfvoJh+r1+wRXkjxL/nL6XAANMsI0NWSW2oPBnOjydlajIa74KZzKyFfqLkAAAHrSURBVDui71d+aGYE6NRo8kALf8lfTocDoFlkAk3v2fVNH+jO2XDiiT+oDbTwl/zldDgAmiUE6u/fvXN7AHVlcmxHCPS5Se/SJ/sLnrfhdwq7j6VAVycz6yu7wo8BX73+O7WBFv6Sv5wOB0CzhED9HbzLDvv7nmszG76xGOyDLno39hb8kWvRP+LJfYx3BdAVLw80vEnnov+lNtD8X/KX0+EAaJYE6K7g4GjRuyzcxAdQox3KBe+63Aa/4vimCLS/OLbH3xtlAK04SCr8JX85HQ6AZmEC9X8Y34SruEdaYSt/Y2Mflj+5cmO/CdDcX/KX0+EAaJYhoBuPRCNochuZte35exhW2VqI/2xxVwDLH/qm9jQCmvtL/nI6HADNUgAa4Az2Rf0t+8Yne/v39E/9/HdmvJ3pzFW24jsbL9wYwVqdDO8X3wBo9pf85XQ4AJomupK0z/PGrg026Ycnx94Zin3C8y7d4zsd+13xi0Dp8naF14P8Y6yFXeEP6l5Jyv4yuJLEW06HA6ANUw1U10K6HQBtGADVEwBtGADVEwBtGADVEwBtGADVEwBtGADVEwBFSAdAEdIBUIR0ABQhHQBFSAdAEdIBUIR0ABQhHQBFSAdAEdIBUIR0ABQhHQBFSAdAEdLxeK/4QhAK+X9hto3C4160EAAAAABJRU5ErkJggg==" /><!-- --></p>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

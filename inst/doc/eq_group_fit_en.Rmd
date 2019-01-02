@@ -1,0 +1,135 @@
+---
+title: "Fitting linear and non-linear equations by group"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fitting linear and non-linear equations by group}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+library(dplyr)
+library(tidyr)
+```
+
+We'll fit some linear and non-linear models for dominant height, and compare them. We'll use the first 10 strata of the exemple dataset exfm16.
+```{r}
+library(forestmangr)
+library(dplyr)
+library(tidyr)
+
+data(exfm14)
+data_ex <- exfm14 %>% filter(strata%in%1:10)
+data_ex
+```
+
+In order to fit Schumacher's dominant height model, we can use `lm_table`. Thanks to the `log` and `inv` functions, there is no need to create new variables:
+```{r}
+mod1 <- lm_table(data_ex, log(dh) ~ inv(age))
+mod1
+```
+
+To fit a non-linear model, like Chapman-Richards' we can use the `nls_table` function. This function uses Levenberg-Marquardt's algorithm by default, in order to assure a good fit. Since this is a non-linear fit, we have to input initial values for all coefficients:
+```{r}
+mod2 <- nls_table(data_ex, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
+mod2
+```
+
+If we wanted to fit one model of each stratum, we can use the `.groups` argument:
+```{r}
+mod1 <- lm_table(data_ex, log(dh) ~ inv(age), .groups = "strata")
+mod1
+```
+
+
+```{r}
+mod2 <- nls_table(data_ex, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
+          .groups = "strata" )
+mod2
+```
+
+If the fit is not ideal, it's possible to use a dataframe with starting values for each stratum, and use it as an input for `mod_start`:
+```{r}
+tab_start <- data.frame(strata = c(1:10), 
+              rbind(
+              data.frame(b0=rep(23, 5),b1=rep(0.03,5),b2=rep(1.3,5) ), 
+              data.frame(b0=rep(23, 5),b1=rep(0.03,5),b2=rep(.5,5) )))
+tab_start
+```
+
+```{r}
+mod2 <- nls_table(data_ex, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = tab_start,
+          .groups = "strata" )
+mod2
+```
+
+Now we're going to fit some other models. These are:
+
+Schumacher:
+$$ Ln(DH) = \beta_0 + \beta_1 * \frac{1}{age} $$
+
+Chapman-Richards:
+$$ DH = \beta_0 * (1 - exp^{-\beta_1 * age})^{\beta_2}  $$
+
+Bayley-Clutter:
+$$ Ln(DH) = \beta_0 + \beta_1 * \begin{pmatrix} \frac{1}{age} \end{pmatrix} ^{\beta_2}  $$
+
+Curtis:
+$$ DH = \beta_0 + \beta_1 * \frac{1}{age} $$
+
+We'll fit these models and add their estimated values to the original data using the `merge_est` output and naming each estimated variable with the `est_name` argument:
+```{r}
+data_ex_est <- data_ex %>% 
+  lm_table(log(dh) ~ inv(age), .groups = "strata",
+           output = "merge_est", est.name = "Schumacher") %>% 
+  
+  nls_table(dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),.groups="strata",
+          output ="merge_est",est.name="Chapman-Richards") %>% 
+  
+  nls_table(log(dh) ~ b0 + b1 * ( inv(age)^b2 ) , 
+          mod_start = c( b0=3, b1=-130, b2 = 1.5),.groups = "strata",
+          output ="merge_est",est.name = "Bailey-Clutter") %>% 
+  
+  lm_table(dh ~ inv(age), .groups = "strata",
+           output = "merge_est", est.name = "Curtis") 
+
+head(data_ex_est)  
+  
+```
+Ps: The `lm_table` function checks if the model has log in the y variable, and if it does, it removes it automatically when estimating variables. Because of that, there's no need to calculate the exponential for the estimated variables.
+
+In order to compare these models, we'll calculate the root mean square error and bias for all models. To do this, we'll gather all estimated variables in a single column using `tidyr::gather`, group by model, and use the `rmse_per` and `bias_per` functions:
+```{r}
+data_ex_est %>% 
+  gather(Model, Value, 
+         Schumacher, `Chapman-Richards`, `Bailey-Clutter`, Curtis) %>% 
+  group_by(Model) %>% 
+  summarise(
+    RMSE = rmse_per(y = dh, yhat = Value),
+    BIAS = bias_per(y = dh, yhat = Value) )
+```
+
+Another way of comparing and evaluating these models is using residual graphical analysis. The function `resid_plot` can help us with that:
+```{r, warning=FALSE, message=FALSE}
+resid_plot(data_ex_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis")
+```
+
+There are other types of plots avaiable, such as histogram:
+```{r, warning=FALSE, message=FALSE}
+resid_plot(data_ex_est, "dh", "Schumacher","Chapman-Richards","Bailey-Clutter", "Curtis",
+           type = "histogram_curve")
+```
+
+And versus:
+```{r, warning=FALSE, message=FALSE}
+resid_plot(data_ex_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis",
+           type = "versus")
+```
