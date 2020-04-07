@@ -4,9 +4,18 @@
 \alias{nls_table}
 \title{Fit non-linear regressions by group, using LM algorithm and get different output options.}
 \usage{
-nls_table(df, model, mod_start, .groups = NA, output = "table",
-  est.name = "est", replace = FALSE, keep_model = FALSE,
-  global_start, algorithm = "LM")
+nls_table(
+  df,
+  model,
+  mod_start,
+  .groups = NA,
+  output = "table",
+  est.name = "est",
+  replace = FALSE,
+  keep_model = FALSE,
+  global_start,
+  algorithm = "LM"
+)
 }
 \arguments{
 \item{df}{A data frame.}
@@ -80,17 +89,7 @@ nls_table(exfm14, dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
 # mod_start needs to be a data frame in this case.
 
 # It's possible to bind the coefficients to the original data,
-# to estimate y. We'll also estimate bias and rmse for this estimation:
-nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
-          mod_start = tab_coef ,
-          .groups = "strata", 
-          replace = TRUE,
-          output = "merge" ) \%>\% 
-  mutate(
-  dh_est = b0 * (1 - exp( -b1 * age )  )^b2,
-  bias = bias_per(y = dh, yhat = dh_est),
-  rmse = rmse_per(y = dh, yhat = dh_est) ) \%>\% 
-  head(15)
+# to estimate y. We'll also estimate bias and rmse for this estimation.
 
 # This can also be done directly using "merge_est" as output:
 nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 

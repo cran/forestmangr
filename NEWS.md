@@ -1,5 +1,33 @@
 # forestmangr development
 
+# forestmangr 0.9.2
+
+* updated nls_table and lm_table to work with tibble 3.0.0;
+
+* new function: rm_empty_cols; this function is used internally to better handle optional variables;
+
+* added a new dependency, forcats;
+
+* new function: ident_model_full; this function runs the complete identity model test;
+
+* fixed a bug where lm_table and nls_table would sometimes change the order of coefficients;
+
+* graybill_f now accepts vectors as input;
+
+* average_tree_curve now has a color argument, that allows variables to be mapped as colors;
+
+* average_tree_curve now plots a mirrored plot, as to resemble a tree (mirror argument) and has an argument to remove the equation from the plot;
+
+* rmse_perc and bias_perc now have a na.rm argument (which is TRUE by default);
+
+* updated tree_summarise to sum volume with and without bark using 2 new arguments;
+
+* fixed vol_summarise handlying of optional variables;
+
+* new function: class_center;
+
+* diameter_class and bdq_meyer can now handle all values of class intervals correctly.
+
 # forestmangr 0.9.1
 
 * Graybill_F is now graybill_f;

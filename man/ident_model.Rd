@@ -4,8 +4,16 @@
 \alias{ident_model}
 \title{Identity of a Model Test}
 \usage{
-ident_model(df, factor, reduced_model, filter = NA, gray_scale = TRUE,
-  signif = 0.05, font = "serif", output = "table")
+ident_model(
+  df,
+  factor,
+  reduced_model,
+  filter = NA,
+  gray_scale = TRUE,
+  signif = 0.05,
+  font = "serif",
+  output = "table"
+)
 }
 \arguments{
 \item{df}{a data frame.}
@@ -65,9 +73,6 @@ ident_model(exfm13, "species", dbh ~  N + N2,
  
 ident_model(exfm13, "species", dbh ~  N + N2, 
 filter = c("PEQUI", "VINHATICO"), output = "table_plot")
-
-ident_model(exfm13, "species", dbh ~  N + N2, 
-filter = c("SUCUPIRA-PRETA", "PEQUI"), output = "table_plot")
 
 ident_model(exfm13, "species", dbh ~  N + N2, 
 filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")

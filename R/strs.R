@@ -66,7 +66,7 @@
 
 strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=TRUE ){
   # ####
-  Nj<-N<-Pj<-Yj<-Pj_Sj2<-Pj_Sj<-Pj_Yj<-EPj_Sj<-Y<-nj<-EPj_Sj2<-t_rec<-n_recalc<-nj_optimal<-Sy<-Abserror<-AREA_PC<-Yhat<-Total_Error<-NULL
+  Nj<-N<-Pj<-Yj<-Pj_Sj2<-Pj_Sj<-Pj_Yj<-EPj_Sj<-Y<-nj<-EPj_Sj2<-t_rec<-n_recalc<-nj_optimal<-Sy<-Abserror<-AREA_PC<-Yhat<-Total_Error<-VC<-NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -277,8 +277,8 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
     dplyr::mutate(
       EPj_Sj2  =   sum(Pj_Sj2), 
       EPj_Sj   =   sum(Pj_Sj), 
+      VC       = EPj_Sj / sum(Pj_Yj) * 100, # Coeficiente de variancia
       Y        =   sum(Pj_Yj), # media estratificada (ponderada)     
-      VC       = EPj_Sj / Y * 100, # Coeficiente de variancia
       t        = stats::qt(alpha/2, df = sum(nj)-1, lower.tail = FALSE),     # a seguir, o t sera calculado utilizando o n calculado, de forma direta
       t_rec    = ifelse(pop=="inf",
           stats::qt(alpha/2, df = ceiling( t^2 * EPj_Sj^2 / (error*Y/100)^2 )-1, lower.tail = FALSE),
@@ -292,8 +292,8 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
       n_optimal  = sum(nj_optimal), # n calculado total
       Yhatj    = Nj * Yj )  %>% # producao total por estrato
     dplyr::na_if(0) %>% # substitui 0 por NA
-    dplyr::select_if(Negate(anyNA) ) # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
-  
+    rm_empty_col  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
+    
   
   x <- x_ %>% 
     plyr::rename(
@@ -310,10 +310,10 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
         "Pj_Sj2"     = "PjSj2", 
         "Pj_Sj"      = "PjSj", 
         "Pj_Yj"      = "PjYj",
-        "EPj_Sj2"    = "EPjSj2",
-        "EPj_Sj"     = "EPjSj", 
-        "Y"          = "Stratified mean (Y)",
-        "VC"         = "Variance Quoeficient (VC)", 
+       # "EPj_Sj2"    = "Stratified Variance",
+       # "EPj_Sj"     = "Stratified Standard Deviation", 
+      #  "VC"         = "Variance Quoeficient (VC)", 
+     #   "Y"          = "Stratified mean (Y)",
         "t"          = "t-student", 
         "t_rec"      = "recalculated t-student", 
         "n_recalc"   = "Number of samples regarding the admited error",
@@ -321,16 +321,21 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
         "n_optimal"  = "Optimal number of samples (n optimal)", 
         "Yhatj"      = "Total value of Y per stratum (Yhatj)"  ),
       warn_missing = F) %>% 
+    dplyr::select(-EPj_Sj2,-EPj_Sj,-VC,-Y) %>% #remover variaveis comuns aos estratos
     forestmangr::round_df(dec_places)  
   
   
   y_ <- x_ %>%
     dplyr::summarise(
       t     = mean(t),
+      #t_rec = mean(t_rec),
       Sy           = ifelse(pop=="inf",
             sqrt(sum(Pj_Sj)^2 / sum(nj) ),
             sqrt(sum(Pj_Sj) ^2 / sum(nj) - (mean(EPj_Sj2) / mean(N) )  )
                      ), # Erro-padrao da media
+      EPj_Sj2  =   sum(Pj_Sj2),  # Variancia estratificada
+      EPj_Sj   =   sum(Pj_Sj),  # desvio padrao estratificado
+      VC       = EPj_Sj / sum(Pj_Yj) * 100, # Coeficiente de variancia
       Y            = sum(Pj_Yj), # media de Yi estratificada (ponderada) 
       Abserror      = Sy * t, # Erro Absoluto
       Percerror     = Abserror / Y * 100, # Erro percentual
@@ -348,6 +353,10 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   y <- y_ %>% 
     plyr::rename(
       c("t"            = "t-student",
+        #"t_rec"      = "recalculated t-student",
+        "EPj_Sj2"    = "Stratified Variance",
+        "EPj_Sj"     = "Stratified Standard Deviation", 
+        "VC"         = "Variance Quoeficient (VC)", 
         "Y"            = "Stratified Mean (Y)",
         "Sy"           = "Standard error of the mean (Sy)",
         "Abserror"     = "Absolute Error" ,

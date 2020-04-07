@@ -64,7 +64,7 @@
 
 sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
   # ####
-  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-NULL
+  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-VC<-NULL
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar
@@ -210,14 +210,16 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
       n_recalc     = ifelse(pop=="inf",
                             ceiling( t_rec ^2 * VC^2 / error^2 ) ,
                             ceiling( t_rec ^2 * VC^2 / ( error^2 +(t_rec^2 * VC^2 / N) ) ) ),
+      S2           = stats::var(!!Yi_sym,na.rm=T), #Variancia
+      sd           = stats::sd(!!Yi_sym,na.rm=T), # desvio padrao
       Y            = mean(!!Yi_sym, na.rm=T), # Media do volume
       Sy           = ifelse(pop=="inf", 
                             sqrt( stats::var(!!Yi_sym,na.rm=T)/n ), 
                             sqrt( stats::var(!!Yi_sym,na.rm=T)/n  * (1 - (n/N)) ) ),
       Abserror      = Sy * t , # Erro Absoluto
       Percerror     = Abserror / Y * 100 , # Erro Percentual
-      Yhat         = Y * N, # Media estimada para Área total
-      Total_Error   = Abserror * N, # Erro EStimado Para Área Total
+      Yhat         = Y * N, # Media estimada para area total
+      Total_Error   = Abserror * N, # Erro EStimado Para area Total
       CI_Inf       = Y - Abserror, # Intervalo de confianca inferior
       CI_Sup       = Y + Abserror, # Intervalo de confianca superior
       CI_ha_Inf    = (Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T), # Intervalo de confianca por ha inferior
@@ -225,7 +227,7 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
       CI_Total_inf = Yhat - Total_Error, # Intervalo de confianca total inferior
       CI_Total_Sup = Yhat + Total_Error) %>% # Intervalo de confianca total superior
     dplyr::na_if(0) %>% # substitui 0 por NA
-    dplyr::select_if(Negate(anyNA) ) %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
+    rm_empty_col %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     forestmangr::round_df(dec_places)
   
   
@@ -233,10 +235,12 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
     plyr::rename(c( "age"          = "Age"                  , 
                     "n"            = "Total number of sampled plots (n)",
                     "N"            = "Number of maximum plots (N)", 
-                    "VC"           = "Variance Quoeficient (VC)", 
                     "t"            = "t-student"                      ,
                     "t_rec"        = "recalculated t-student", 
                     "n_recalc"     = "Number of samples regarding the admited error",
+                    "S2"           = "Variance (S2)",
+                    "sd"           = "Standard deviation (s)",
+                    "VC"           = "Variance Quoeficient (VC)", 
                     "Y"            = "Mean (Y)"                ,
                     "Sy"           = "Standard error of the mean (Sy)",
                     "Abserror"     = "Absolute Error" ,
@@ -280,7 +284,7 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
       dplyr::arrange(!!! .groups_syms ) %>%  # organiza os dados (meio desnecessario, mas ok)
       tidyr::spread(!!last_group_var,"value",sep="") %>%  # Colocar cada talhao(por exemplo) em um coluna, espalhando-o pela tabela de forma horizontal
       dplyr::ungroup() # 'desgrupificar' o dado
-      
+    
     
     return(as.data.frame(y))
     

@@ -85,10 +85,13 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+  # se nao for fornecido, criar tambem variavel com todos os nomes, para usar em nest
   if((missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="") ) && !is.null(dplyr::groups(df))){
     .groups_syms <- rlang::syms(dplyr::groups(df))
+    notgpvars <- names(df)[!names(df)%in% dplyr::groups(df) ]
   }else if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="")){
     .groups_syms <- character()
+    notgpvars <- names(df)
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){
     stop(".groups must be a character", call. = F)
@@ -102,6 +105,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     # e procure o nome das variaveis dentro dos objetos
   }else{
     .groups_syms <- rlang::syms(.groups)
+    notgpvars <- names(df)[!names(df)%in%.groups]
   }
   
   # Se output nao for character,ou nao for de tamanho 1, parar
@@ -133,7 +137,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     
     tibble::tibble(b=broom::tidy(x)$term, # criamos um data frame que tem apenas as colunas dos betas e seus valores
            estimate=broom::tidy(x)$estimate ) %>% 
-      dplyr::mutate(b = factor(b, labels=0:(length(b)-1) ) ) %>% # mudamos os nomes dos coeficientes para bn
+      dplyr::mutate(b = factor(0:(length(b)-1) , labels=0:(length(b)-1) ) ) %>% # mudamos os nomes dos coeficientes para bn
       tidyr::spread( b, estimate,sep="" )     # com spread deixamos a tabela horizontal, colocando cada coeficiente em uma coluna
     
   }
@@ -145,12 +149,12 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
       Rsqr_adj  = broom::glance(x)$adj.r.squared, # criamos um data table que tem apenas as variaveis R quadrado ajustado e erro padrao
       Std.Error = broom::glance(x)$sigma ) }
   
-  # Aqui e onde a regressao e realmente feita
   
+  # Aqui e onde a regressao e realmente feita
   x <- df %>% 
     dplyr::ungroup() %>% 
     dplyr::group_by( !!!.groups_syms ) %>% 
-    tidyr::nest(.key="dat")  %>% 
+    tidyr::nest( dat = tidyselect::any_of(notgpvars) )  %>% 
     dplyr::mutate(Reg = purrr::map(dat, ~stats::lm(mod, data =., na.action = na.exclude ) ),
            Coefs  = purrr::map(Reg, tidy_   ),
            Qualid = purrr::map(Reg, glance_ ),
@@ -172,7 +176,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     
     # table ira resultar em uma tabela com os coeficientes e as variaveis de qualidade
     y <-  x %>% 
-      tidyr::unnest(Coefs, Qualid, .drop = F) %>% 
+      tidyr::unnest(c(Coefs, Qualid) ) %>% 
       dplyr::select(-dat,-Res,-est)
     
     
@@ -180,15 +184,15 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     
     # Merge ira unir os coeficientes aos dados originais
     y <- x %>% 
-      tidyr::unnest(dat, .drop = F) %>% 
-      tidyr::unnest(Coefs, Qualid ) %>% 
+      tidyr::unnest(dat) %>% 
+      tidyr::unnest(c(Coefs, Qualid) ) %>% 
       dplyr::select(-est, -Res)
     
   }else if(output %in% c("merge_est","est", "estimate")){
     
     #est ou estimate ira estimar a variavel y e uni-la aos dados originais
     y <- x %>% 
-      tidyr::unnest(dat, est, .drop = F) %>% 
+      tidyr::unnest(c(dat, est) ) %>% 
       dplyr::select(- dplyr::one_of( c("Coefs", "Qualid", "Res", "est" )), est )   # passar est para final da tabela
     
   }else if( output == "nest" ){

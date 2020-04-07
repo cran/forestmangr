@@ -4,10 +4,11 @@
 \name{exfm7}
 \alias{exfm7}
 \title{Data of felled trees sections, measured in the Smalian method}
-\format{A data frame with 11 observations and 3393 variables:
+\format{
+A data frame with 11 observations and 3393 variables:
 \describe{
   \item{MAP}{map numbers}
-  \item{PROJECT}{name of project}
+  \item{PROJECT}{Project's name}
   \item{SPACING}{Spacing used in the plots, in meters}
   \item{STRATA}{stratum number}
   \item{GENCODE}{genetic code of plots}
@@ -17,7 +18,8 @@
   \item{hi}{height of sections, in meters}
   \item{di_wb}{diameter of sections with bark, in centimeters}
   \item{bark_t}{bark of thickness, in millimeters}
-}}
+}
+}
 \usage{
 data(exfm7)
 }
