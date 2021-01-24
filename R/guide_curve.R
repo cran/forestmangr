@@ -47,7 +47,7 @@
 #'
 guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher", start_chap = c(b0=23, b1=0.03, b2 = 1.3), start_bailey = c( b0=3, b1=-130, b2 = 1.5), round_classes = FALSE, font = "serif", gray_scale = TRUE, output = "plot"){
   # ####
-  C<-classe<-nivel<-DH_EST<-DH_CURVE<-NULL
+  C<-classe<-nivel<-DH_EST<-DH_CURVE<-.data<-NULL
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -338,7 +338,9 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
   tab_curva["DH_CURVE"] <- tab_curva["DH_EST"] * tab_curva["fator"]
   
   # reorganiza-se os dados em funcao da age
-  tab_curva <- tab_curva[order(tab_curva[AGE]),]
+  
+  #tab_curva <- tab_curva[order(tab_curva[AGE]),]
+  tab_curva <- dplyr::arrange(tab_curva,.data[[AGE]])
   
   # plota-se o grafico com ggplot
   

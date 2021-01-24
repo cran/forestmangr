@@ -1,7 +1,7 @@
 Type: Package
 Package: forestmangr
 Title: Forest Mensuration and Management
-Version: 0.9.2
+Version: 0.9.3
 Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com",role = c("aut", "cre", "cph")), 
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
               person(c("Eric", "Bastos","Gorgens"),email= "e.gorgensgmail.com", role =  "aut") )
@@ -16,14 +16,15 @@ Depends: R(>= 3.3)
 Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom,
         purrr, forcats, plyr, tibble(>= 3.0.0), systemfit, ggpmisc,
         rlang, utils, car, stats, methods, magrittr, minpack.lm,
-        FinCal, formattable, scales, ggdendro, gridExtra,tidyselect
+        FinCal, formattable, scales, ggdendro,
+        gridExtra,tidyselect,shiny,miniUI
 Suggests: covr, knitr, rmarkdown
 VignetteBuilder: knitr
-Date: 2020-04-05
+Date: 2021-01-24
 Encoding: UTF-8
 License: MIT + file LICENSE
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-04-07 13:25:29 UTC; solla
+Packaged: 2021-01-24 21:41:17 UTC; solla
 Repository: CRAN
-Date/Publication: 2020-04-07 14:00:02 UTC
+Date/Publication: 2021-01-24 22:00:02 UTC

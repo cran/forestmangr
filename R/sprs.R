@@ -186,7 +186,7 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
     stop( "length of 'tidy' must be 1", call.=F)
   }
   
-  # Transformar os objetos em simbolos, para que o dplyr entenda
+  # Transformar os objetos em simbolos, para que o dplyr entenda ####
   # e procure o nome das variaveis dentro dos objetos
   Yi_sym <- rlang::sym(Yi)
   plot_area_sym <- rlang::sym(plot_area)
@@ -197,7 +197,7 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
   
   x_ <-df %>%
     dplyr::na_if(0) %>%
-    dplyr::group_by(!!!.groups_syms, add=T) %>%
+    dplyr::group_by(!!!.groups_syms,.add=T) %>%
     dplyr::summarise(
       age        = mean(!!age_sym,na.rm=T), # usa-se media pois os valores estao repetidos
       n            = dplyr::n() , # número de amostras
