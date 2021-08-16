@@ -1,5 +1,5 @@
 #' @title 
-#' Fit linear regressions by group, with the option of removing outliers using a interactive plot of residuals.
+#' Fit linear regressions, with the option of removing outliers using a interactive plot of residuals.
 #' @description 
 #' With this function it's possible to fit linear regressions by a grouping variable, and evaluate each equation via
 #' a interactive plot of residuals, and get a data frame.
@@ -31,7 +31,7 @@
 #'   data("exfm19")
 #' 
 #'   # Fit SH model:
-#'   lm_resid_group(exfm19, log(VWB) ~  log(DBH) + log(TH))
+#'   lm_resid(exfm19, log(VWB) ~  log(DBH) + log(TH))
 #' 
 #' }
 #' 

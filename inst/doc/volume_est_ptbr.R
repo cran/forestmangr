@@ -25,7 +25,7 @@ dados_sma <- dados %>%
 head(as.data.frame(dados_sma))
 
 ## ---- warning=FALSE, message=FALSE--------------------------------------------
-average_tree_curve(df = dados_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+avg_tree_curve(df=dados_sma,d="di_wb",dbh="DBH",h="hi",th="TH")
 
 ## -----------------------------------------------------------------------------
 dados_vol_arvore <- vol_summarise(dados_sma, dbh = "DBH", th = "TH", 

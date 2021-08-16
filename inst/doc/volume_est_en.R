@@ -15,17 +15,17 @@ data_ex_sma <- smalianwb(data_ex,"di_wb", "hi","TREE")
 head(as.data.frame(data_ex_sma))
 
 ## -----------------------------------------------------------------------------
-data_ex_sma <- smalianwob(data_ex_sma, "di_wb", "hi", "bark_t","TREE", bt_mm_to_cm = T)
+data_ex_sma <- smalianwob(data_ex_sma,"di_wb","hi","bark_t","TREE",bt_mm_to_cm=T)
 head(as.data.frame(data_ex_sma))
 
 ## -----------------------------------------------------------------------------
 data_ex_sma <- data_ex %>% 
   smalianwb("di_wb", "hi", "TREE") %>% 
-  smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T)
+  smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm=T)
 head(as.data.frame(data_ex_sma))
 
 ## ---- warning=FALSE, message=FALSE--------------------------------------------
-average_tree_curve(df = data_ex_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+avg_tree_curve(df=data_ex_sma,d="di_wb",dbh="DBH",h="hi",th="TH")
 
 ## -----------------------------------------------------------------------------
 data_ex_vol_arvore <- vol_summarise(data_ex_sma, dbh = "DBH", th = "TH", 
