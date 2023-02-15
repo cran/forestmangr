@@ -1,10 +1,20 @@
 # forestmangr development
+# forestmangr 0.9.5
+
+* add na_to_zero function
+
+* add rmoutliers, fct_to_filter, rmlevels,boolean_filter,onlyfiteddata,del_boolean arguments to lm_table and lm_resid
+
+* add m3ha to sprs,ss_diffs,strs;
+
+* add rqm filter and option to show filtered data only, or original and filtered to lm_table;
+
 # forestmangr 0.9.4
 * fix ggpmisc call and add head calls to examples.
 
 # forestmangr 0.9.3
 
-* replace order function call with dplyr's arrange, due to order's behaviour in certain situations;
+* replace order function call with dplyr's arrange, due to order's behavior in certain situations;
 
 * add shiny and miniUI dependency;
 

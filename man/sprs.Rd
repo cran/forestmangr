@@ -9,6 +9,7 @@ sprs(
   Yi,
   plot_area,
   total_area,
+  m3ha = FALSE,
   age = NA,
   .groups = NA,
   alpha = 0.05,
@@ -26,6 +27,8 @@ sprs(
 \item{plot_area}{Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
 
 \item{total_area}{Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.}
+
+\item{m3ha}{Boolean value. If \code{TRUE} Yi variable is treated in m3/ha, else, in m3. Default: \code{FALSE}.}
 
 \item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.}
 
@@ -81,6 +84,9 @@ sprs(exfm4, "VWB", 3000, 46.8, error = 20, pop = "fin")
 exfm2
 
 sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA" ,error = 20, pop = "fin")
+
+# If the volume variable is in m3ha, you should set m3ha to TRUE:
+sprs(exfm3, "VWB_m3ha", "PLOT_AREA", "TOTAL_AREA",m3ha = TRUE,error = 20, pop = "fin")
 
 }
 \references{
