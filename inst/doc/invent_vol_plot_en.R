@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE-------------------------------------------
+## ----echo = FALSE, message = FALSE--------------------------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
@@ -25,7 +25,7 @@ data_ex <- data_ex %>%
   lm_table(log(TH) ~ log(DBH), output="merge_est",est.name="Henricksen") 
 head(data_ex)
 
-## ---- warning=FALSE-----------------------------------------------------------
+## ----warning=FALSE------------------------------------------------------------
 resid_plot(data_ex, "TH", "CL","Henricksen")
 
 ## -----------------------------------------------------------------------------

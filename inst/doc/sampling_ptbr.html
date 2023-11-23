@@ -368,7 +368,7 @@ uma área, de 46,8 ha com um erro de 20%. Foram lançadas 10 parcelas de
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       46.8      3000    31    103. </span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       46.8      3000    10     33.3</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6       46.8      3000    32    107. </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 4 more rows</span></span></code></pre></div>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 4 more rows</span></span></code></pre></div>
 <p>Agora, rodamos o inventário piloto considerando um erro de 20% e a
 população como finita com a função <code>sprs</code>. Lembrando que os
 valores de área da parcela devem ser inseridos em metros quadrados, e os
@@ -408,7 +408,7 @@ dados são os seguintes:</p>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       46.8      3000    31</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       46.8      3000    10</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6       46.8      3000    32</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more rows</span></span></code></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 19 more rows</span></span></code></pre></div>
 <p>Agora o inventário definitivo será realizado, com 20% de erro e
 considerando uma população finita:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sprs</span>(dados_acs_def, <span class="st">&quot;VWB&quot;</span>, <span class="dv">3000</span>, <span class="fl">46.8</span>, <span class="at">error =</span> <span class="dv">20</span>, <span class="at">pop =</span> <span class="st">&quot;fin&quot;</span>)</span>
@@ -505,7 +505,7 @@ parcelas para o inventário piloto. Os dados são o seguinte:</p>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4      1        14.4      1000  6.25     62.5</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      1        14.4      1000  5.55     55.5</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6      1        14.4      1000  8.1      81  </span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 16 more rows</span></span></code></pre></div>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 16 more rows</span></span></code></pre></div>
 <p>Agora realizamos o inventário com um um erro almejado de 5%,
 considerando a população como finita utilizando a função
 <code>strs</code>. Os valores de área podem ser inseridos como números,
@@ -589,7 +589,7 @@ esses:</p>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4      1        14.4      1000  6.25     62.5</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      1        14.4      1000  5.55     55.5</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6      1        14.4      1000  8.1      81  </span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 51 more rows</span></span></code></pre></div>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 51 more rows</span></span></code></pre></div>
 <p>Agora, realizamos o inventário novamente, dessa vez para os dados
 definitivos. Consideramos novamente um erro de 5% e a população como
 finita:</p>
@@ -671,7 +671,7 @@ finita:</p>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         10       200    10      500</span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5         10       200    13      650</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         10       200    12      600</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 12 more rows</span></span></code></pre></div>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
 <p>Primeiro, vamos ver qual seria o erro atingido, pelo método da
 amostragem casual simples:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sprs</span>(dados_as, <span class="st">&quot;VWB&quot;</span>, <span class="dv">200</span>, <span class="dv">18</span>)</span>

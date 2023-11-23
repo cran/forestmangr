@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE-------------------------------------------
+## ----echo = FALSE, message = FALSE--------------------------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
@@ -24,7 +24,7 @@ dados_sma <- dados %>%
   smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T)
 head(as.data.frame(dados_sma))
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ----warning=FALSE, message=FALSE---------------------------------------------
 avg_tree_curve(df=dados_sma,d="di_wb",dbh="DBH",h="hi",th="TH")
 
 ## -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ dados_vol_arvore <- vol_summarise(dados_sma, dbh = "DBH", th = "TH",
                                   vwb="VWB",tree = "TREE",vwob="VWOB")
 dados_vol_arvore
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ----warning=FALSE, message=FALSE---------------------------------------------
 dados_vol_arvore %>% 
   lm_table(log(VWB) ~  log(DBH) + log(TH),output="merge_est",est.name="Schumacher") %>%
   lm_table(log(VWB) ~  log(DBH),output="merge_est",est.name="Husch") %>%

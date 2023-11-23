@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE, warning=FALSE----------------------------
+## ----echo = FALSE, message = FALSE, warning=FALSE-----------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
@@ -75,14 +75,14 @@ data_ex_est %>%
     RMSE = rmse_per(y = dh, yhat = Value),
     BIAS = bias_per(y = dh, yhat = Value) )
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ----warning=FALSE, message=FALSE---------------------------------------------
 resid_plot(data_ex_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis")
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ----warning=FALSE, message=FALSE---------------------------------------------
 resid_plot(data_ex_est, "dh", "Schumacher","Chapman-Richards","Bailey-Clutter", "Curtis",
            type = "histogram_curve")
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ----warning=FALSE, message=FALSE---------------------------------------------
 resid_plot(data_ex_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis",
            type = "versus")
 

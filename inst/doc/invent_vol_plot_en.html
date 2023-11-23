@@ -349,17 +349,17 @@ and other variables for each plot.</p>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data_ex <span class="ot">&lt;-</span> exfm9</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data_ex</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 900 × 14</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   MAP     PROJECT STRATA GENCODE STRATA_AREA PLANTING…¹ SPACING  PLOT MEASUREM…²</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;date&gt;     &lt;fct&gt;   &lt;int&gt; &lt;date&gt;    </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 FOREST1       1      2 FLO014           45 2007-04-01 3x3         1 2012-09-04</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 FOREST1       1      2 FLO014           45 2007-04-01 3x3         1 2012-09-04</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 FOREST1       1      2 FLO014           45 2007-04-01 3x3         1 2012-09-04</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 FOREST1       1      2 FLO014           45 2007-04-01 3x3         1 2012-09-04</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 FOREST1       1      2 FLO014           45 2007-04-01 3x3         1 2012-09-04</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 FOREST1       1      2 FLO014           45 2007-04-01 3x3         1 2012-09-04</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 894 more rows, 5 more variables: PLOT_AREA &lt;int&gt;, PIT &lt;int&gt;,</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   DBH &lt;dbl&gt;, TH &lt;dbl&gt;, OBS &lt;fct&gt;, and abbreviated variable names</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ¹​PLANTING_DATE, ²​MEASUREMENT_DATE</span></span></code></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   MAP     PROJECT STRATA GENCODE STRATA_AREA PLANTING_DATE SPACING  PLOT</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;date&gt;        &lt;fct&gt;   &lt;int&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 FOREST1       1      2 FLO014           45 2007-04-01    3x3         1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 FOREST1       1      2 FLO014           45 2007-04-01    3x3         1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 FOREST1       1      2 FLO014           45 2007-04-01    3x3         1</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 FOREST1       1      2 FLO014           45 2007-04-01    3x3         1</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 FOREST1       1      2 FLO014           45 2007-04-01    3x3         1</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 FOREST1       1      2 FLO014           45 2007-04-01    3x3         1</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 894 more rows</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 6 more variables: MEASUREMENT_DATE &lt;date&gt;, PLOT_AREA &lt;int&gt;, PIT &lt;int&gt;,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   DBH &lt;dbl&gt;, TH &lt;dbl&gt;, OBS &lt;fct&gt;</span></span></code></pre></div>
 <p>The first step is to estimate the height of non measured trees. We’ll
 evaluate two hypsometric models. Henricksen’s: <span class="math display">\[ Ln(H) = \beta_0 + \beta_1*Ln(H) \]</span></p>
 <p>And Campos &amp; Leite’s model, which uses dominant height: <span class="math display">\[ Ln(H) = \beta_0 + \beta_1*\frac{1}{dbh} +
@@ -381,7 +381,7 @@ is <code>&quot;dom&quot;</code>.</p>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     4  20.0</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     5  19.6</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     7  24.4</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 4 more rows</span></span></code></pre></div>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 4 more rows</span></span></code></pre></div>
 <p>Now that we’ve seen the dominant height of each plot, we can run the
 function again, but this time set the <code>merge_data</code> argument
 as <code>TRUE</code>, to bind the variable to the data directly:</p>
