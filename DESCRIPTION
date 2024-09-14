@@ -1,10 +1,10 @@
 Type: Package
 Package: forestmangr
 Title: Forest Mensuration and Management
-Version: 0.9.6
+Version: 0.9.7
 Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com",role = c("aut", "cre", "cph")), 
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
-              person(c("Eric", "Bastos","Gorgens"),email= "e.gorgensgmail.com", role =  "aut") )
+              person(c("Eric", "Bastos","Gorgens"),email= "e.gorgens@gmail.com", role =  "aut") )
 Author: Sollano Rabelo Braga [aut, cre, cph],
   Marcio Leles Romarco de Oliveira [aut],
   Eric Bastos Gorgens [aut]
@@ -19,11 +19,11 @@ Imports: dplyr(>= 1.0), ggplot2(>= 3.0), ggthemes, tidyr,broom,purrr,
         minpack.lm, FinCal,scales,ggdendro, gridExtra,shiny,miniUI
 Suggests: knitr,rmarkdown,tidyselect,formattable
 VignetteBuilder: knitr
-Date: 2023-11-30
+Date: 2024-09-14
 Encoding: UTF-8
 License: MIT + file LICENSE
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-11-23 18:07:24 UTC; sollano.braga
+Packaged: 2024-09-14 23:21:17 UTC; solla
 Repository: CRAN
-Date/Publication: 2023-11-23 18:30:02 UTC
+Date/Publication: 2024-09-14 23:40:02 UTC
