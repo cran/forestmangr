@@ -2,7 +2,7 @@
 #' Convert NA to zero on numeric variables
 #' @description 
 #' This function Convert NA to zero on numeric variables outside of mutate.
-#' this is used because of dplyr 1.1.0.
+#' this is used due to changes on dplyr 1.1.0.
 #'  
 #' @param df A data frame
 #' 
@@ -14,15 +14,12 @@
 #' library(forestmangr)
 #' data("exfm15")
 #' head(exfm15)
-#' 
-#' # Raise a numeric vector to the power of 2:
-#' pow(iris$Petal.Length, 2)
-#' 
-#' # Fit a model that contains the dbh squared, without the need to create a new variable:
+#'
+#' # Turn NA values to zero only on numeric values
 #' exfm15 %>% na_to_0()
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 na_to_0 <- function(df) {
-  dplyr::mutate(df, dplyr::across(tidyselect::where(is.numeric), ~ dplyr::na_if(.x, 0)))
+  dplyr::mutate(df, dplyr::across(tidyselect::where(is.numeric), ~ tidyr::replace_na(.x, 0)))
 }
